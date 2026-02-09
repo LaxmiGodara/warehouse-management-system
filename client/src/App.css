@@ -1,0 +1,76 @@
+/* Global CSS variables for dark theme */
+:root {
+  --bg-dark: #0f1115;
+  --bg-surface: #1a1d23;
+  --bg-hover: #232734;
+  --text-primary: #ffffff;
+  --text-muted: #a0a4b8;
+  --accent: #4f8cff;
+  --radius: 10px;
+}
+
+/* Reset & base styling */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+/* App layout wrapper */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar navigation */
+.sidebar {
+  width: 220px;
+  background-color: var(--bg-surface);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Main content area */
+.content {
+  flex: 1;
+  padding: 24px;
+}
+
+/* Navigation item */
+.nav-item {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    background-color 0.15s ease;
+}
+
+/* Hover feedback */
+.nav-item:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Subtle 3D press effect */
+.nav-item:active {
+  transform: scale(1.03);
+}
+
+/* Page title styling */
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+}
