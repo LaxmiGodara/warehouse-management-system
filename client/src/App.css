@@ -18,11 +18,7 @@ body {
   margin: 0;
   background-color: var(--bg-dark);
   color: var(--text-primary);
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 /* App layout wrapper */
@@ -71,10 +67,12 @@ body {
 
 /* Page title styling */
 .page-title {
+  font-family: "Playfair Display", serif;
   font-size: 28px;
   font-weight: 600;
 }
 
+/* Dashboard grid */
 .dashboard-grid {
   display: grid;
   gap: 1rem;
@@ -87,25 +85,68 @@ body {
   }
 }
 
+/* Summary card */
 .summary-card {
-  background: var(--bg-card);
-
+  background: var(--bg-surface);
   padding: 1.5rem;
   border-radius: 12px;
   color: var(--text-primary);
   transition:
-    tranform 0.2s ease,
+    transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.summary-card :hover {
+
+.summary-card:hover {
+  letter-spacing: 0.2px;
+  background-color: var(--bg-hover);
   transform: scale(1.02);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 8px 8px 3px;
 }
+
+/* Card title */
 .card-title {
-  font-size: 0.9 rem;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.9rem;
   opacity: 0.7;
 }
+
+/* Card value */
 .card-value {
-  font-size: 1.5 rem;
-  margin-top: 0.5 rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.orders input {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  background: var(--bg-card);
+  border: none;
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+button {
+  padding: 0.8rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+button:active {
+  transform: scale(1.03);
+}
+
+.order-card {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-top: 1rem;
 }

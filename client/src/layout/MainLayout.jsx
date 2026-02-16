@@ -1,7 +1,8 @@
-import { Routes, Route, } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import NavItem from "../components/NavItem";
 
 import Dashboard from "../pages/Dashboard";
+
 import Orders from "../pages/Orders";
 import Deliveries from "../pages/Deliveries";
 import Stock from "../pages/Stock";
@@ -21,7 +22,7 @@ export default function MainLayout() {
       <main className="content">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/orders " element={<Orders />} />
+          <Route path="/orders" element={<Orders />}></Route>
           <Route path="/deliveries" element={<Deliveries />} />
           <Route path="/stock" element={<Stock />} />
           <Route path="/payments" element={<Payments />} />
