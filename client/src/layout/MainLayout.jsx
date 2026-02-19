@@ -6,14 +6,16 @@ import Orders from "../pages/Orders";
 import Deliveries from "../pages/Deliveries";
 import Stock from "../pages/Stock";
 import Payments from "../pages/Payments";
+import Products from "../pages/Products";
 
-export default function MainLayout({ customers, setCustomers }) {
+export default function MainLayout({ customers, setCustomers , products, setProducts}) {
   return (
     <div className="app-layout">
       {/* Sidebar Navigation */}
       <aside className="sidebar">
         <NavItem to="/">Dashboard</NavItem>
         <NavItem to="/customers">Customers</NavItem>
+        <NavItem to="/products">Products</NavItem>
         <NavItem to="/orders">Orders</NavItem>
         <NavItem to="/deliveries">Deliveries</NavItem>
         <NavItem to="/stock">Stock</NavItem>
@@ -26,6 +28,12 @@ export default function MainLayout({ customers, setCustomers }) {
             path="/customers"
             element={
               <Customers customers={customers} setCustomers={setCustomers} />
+            }
+          />
+          <Route
+            path="/products"
+            element={
+              <Products products={products} setProducts={setProducts} />
             }
           />
           <Route path="/orders" element={<Orders />} />

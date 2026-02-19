@@ -5,9 +5,11 @@ import { useState } from "react";
 
 function App() {
   const [customers, setCustomers] = useState([]);
+  const [products, setProducts] = useState([])
   return (
     <BrowserRouter>
-      <MainLayout customers={customers} setCustomers={setCustomers} />
+      <MainLayout customers={customers} setCustomers={setCustomers} 
+      products={products} setProducts={setProducts}/>
     </BrowserRouter>
   );
 }
