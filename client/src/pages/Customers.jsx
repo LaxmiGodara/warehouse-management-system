@@ -16,6 +16,7 @@ function Customers({ customers, setCustomers }) {
       phone,
       email,
       location,
+      isActive,
     };
 
     setCustomers([...customers, newCustomer]);
@@ -24,6 +25,7 @@ function Customers({ customers, setCustomers }) {
     setPhone("");
     setEmail("");
     setLocation("");
+    setIsActive(true);
   };
 
   return (
@@ -49,6 +51,7 @@ function Customers({ customers, setCustomers }) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <textarea
           rows={5}
           cols={30}
@@ -67,7 +70,9 @@ function Customers({ customers, setCustomers }) {
         <span>Is Active</span>
       </label>
 
-      <button onClick={handleCreateCustomer}>Add Customer</button>
+      <button onClick={handleCreateCustomer}>
+        Add Customer
+      </button>
 
       <div className="customer-list">
         {customers.map((customer) => (
@@ -77,10 +82,14 @@ function Customers({ customers, setCustomers }) {
             <div>{customer.email}</div>
             <div>{customer.location}</div>
             <div
-              className={customer.isActive ? "badge-active" : "badge-inactive"}
+              className={
+                customer.isActive
+                  ? "badge-active"
+                  : "badge-inactive"
+              }
             >
               {customer.isActive ? "Active" : "Inactive"}
-            </div>  
+            </div>
           </div>
         ))}
       </div>

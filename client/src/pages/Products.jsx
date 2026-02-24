@@ -17,6 +17,7 @@ function Products({ products, setProducts }) {
       mrp: numericMrp,
       unit,
       isActive,
+      totalQty:0
     };
 
     setProducts([...products, newProduct]);
@@ -70,6 +71,7 @@ function Products({ products, setProducts }) {
             <strong>{product.name}</strong>
             <div>MRP: ₹{product.mrp}</div>
             <div>Unit: {product.unit}</div>
+            <div>Total Qty: {product.totalQty}</div>
             <div
               className={product.isActive ? "badge-active" : "badge-inactive"}
             >
