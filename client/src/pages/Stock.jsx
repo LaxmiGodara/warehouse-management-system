@@ -4,28 +4,50 @@ export default function Stock({ products, setProducts }) {
   const [editingId, setEditingId] = useState(null);
   const [editedQty, setEditedQty] = useState("");
 
+  // start editing a row
   const handleEditClick = (product) => {
     setEditingId(product.id);
     setEditedQty(product.totalQty);
   };
 
+  // cancel edit
   const handleCancel = () => {
     setEditingId(null);
     setEditedQty("");
   };
 
+  // save updated total qty with business validations
   const handleUpdate = (id) => {
-    const updatedProducts = products.map((product) => {
-      if (product.id === id) {
+    const numericQty = Number(editedQty);
+
+    setProducts((prev) =>
+      prev.map((product) => {
+        if (product.id !== id) return product;
+
+        // ❌ validation: must be number and >= 0
+        if (isNaN(numericQty) || numericQty < 0) {
+          alert("Total Qty must be 0 or more");
+          return product;
+        }
+
+        // ❌ validation: cannot be less than reserved
+        if (numericQty < product.reservedQty) {
+          alert("Total Qty cannot be less than Reserved Qty");
+          return product;
+        }
+
+        // ✅ recalculate available qty
+        const availableQty = numericQty - product.reservedQty;
+
         return {
           ...product,
-          totalQty: Number(editedQty),
+          totalQty: numericQty,
+          availableQty,
+          lastModified: new Date(), // audit timestamp
         };
-      }
-      return product;
-    });
+      }),
+    );
 
-    setProducts(updatedProducts);
     setEditingId(null);
     setEditedQty("");
   };
@@ -43,6 +65,9 @@ export default function Stock({ products, setProducts }) {
               <th>S.No</th>
               <th>Product Name</th>
               <th>Total Qty</th>
+              <th>Reserved Qty</th>
+              <th>Available Qty</th>
+              <th>Last Modified</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -54,6 +79,7 @@ export default function Stock({ products, setProducts }) {
 
                 <td>{product.name}</td>
 
+                {/* total qty editable only in edit mode */}
                 <td>
                   {editingId === product.id ? (
                     <input
@@ -66,11 +92,24 @@ export default function Stock({ products, setProducts }) {
                   )}
                 </td>
 
+                {/* read-only reserved */}
+                <td>{product.reservedQty}</td>
+
+                {/* read-only available */}
+                <td>{product.availableQty}</td>
+
+                {/* last modified display */}
+                <td>
+                  {product.lastModified
+                    ? new Date(product.lastModified).toLocaleString()
+                    : "-"}
+                </td>
+
                 <td>
                   {editingId === product.id ? (
                     <>
                       <button onClick={() => handleUpdate(product.id)}>
-                        Update
+                        Save
                       </button>
                       <button onClick={handleCancel}>Cancel</button>
                     </>

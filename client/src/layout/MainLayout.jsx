@@ -36,7 +36,7 @@ export default function MainLayout({ customers, setCustomers , products, setProd
               <Products products={products} setProducts={setProducts} />
             }
           />
-          <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders}  products={products}/>} />
+          <Route path="/orders" element={<Orders orders={orders} setOrders={setOrders}  products={products} customers={customers}/>} />
           <Route path="/deliveries" element={<Deliveries orders={orders} deliveries={deliveries} setDeliveries={setDeliveries} products={products} setProducts={setProducts} paymentDues={paymentDues} setPaymentDues={setPaymentDues}/>} />
           <Route path="/stock" element={<Stock  products={products} setProducts={setProducts}/>} />
           <Route path="/payments" element={<Payments  paymentDues={paymentDues} setPaymentDues={setPaymentDues}/>} />
