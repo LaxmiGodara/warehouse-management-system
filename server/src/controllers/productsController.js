@@ -1,20 +1,14 @@
-// productsController.js
-// Handles all product operations
-// All routes are Admin only — enforced at route level
+
 
 import Product from "../models/Product.js";
 
-// ── Get All Products ───────────────────────────────────────────────────────
-// Supports optional search by product name using query parameter
-// Example: GET /api/products?search=rice
+
 export const getAllProducts = async (req, res, next) => {
   try {
-    // Start with base filter — exclude deleted products
+  
     const filter = { isDeleted: false };
 
-    // If search query is provided, filter by product name
-    // $regex allows partial matching — "ric" matches "Rice", "Brown Rice"
-    // $options: 'i' makes it case insensitive
+   
     if (req.query.search) {
       filter.productName = {
         $regex: req.query.search,
@@ -23,7 +17,7 @@ export const getAllProducts = async (req, res, next) => {
     }
 
     const products = await Product.find(filter).sort({ createdAt: -1 });
-    // sort by newest first
+
 
     res.status(200).json({
       success: true,
@@ -35,17 +29,15 @@ export const getAllProducts = async (req, res, next) => {
   }
 };
 
-// ── Get Active Products for Dropdown ──────────────────────────────────────
-// Used by Orders module to populate product dropdown
-// Returns only fields needed for dropdown — keeps response light
+
 export const getActiveProducts = async (req, res, next) => {
   try {
     const products = await Product.find(
       { isActive: true, isDeleted: false },
-      // Second argument = projection — only return these fields
+
       { productName: 1, unit: 1, defaultRate: 1 },
     ).sort({ productName: 1 });
-    // sort alphabetically by name
+
 
     res.status(200).json({
       success: true,
@@ -56,7 +48,7 @@ export const getActiveProducts = async (req, res, next) => {
   }
 };
 
-// ── Get Single Product by ID ───────────────────────────────────────────────
+
 export const getProductById = async (req, res, next) => {
   try {
     const product = await Product.findOne({
@@ -80,12 +72,12 @@ export const getProductById = async (req, res, next) => {
   }
 };
 
-// ── Create Product ─────────────────────────────────────────────────────────
+
 export const createProduct = async (req, res, next) => {
   try {
     const { productName, unit, defaultRate, isActive } = req.body;
 
-    // Validate required fields
+
     if (!productName || !unit || defaultRate === undefined) {
       return res.status(400).json({
         success: false,
@@ -93,7 +85,7 @@ export const createProduct = async (req, res, next) => {
       });
     }
 
-    // Validate rate is not negative
+
     if (defaultRate < 0) {
       return res.status(400).json({
         success: false,
@@ -101,7 +93,7 @@ export const createProduct = async (req, res, next) => {
       });
     }
 
-    // Check for duplicate product name
+
     const existing = await Product.findOne({
       productName: { $regex: `^${productName}$`, $options: "i" },
       isDeleted: false,
@@ -119,7 +111,7 @@ export const createProduct = async (req, res, next) => {
       unit,
       defaultRate,
       isActive: isActive !== undefined ? isActive : true,
-      totalQty: 0, // stock starts at 0 — Admin sets it via Stock module
+      totalQty: 0, 
     });
 
     res.status(201).json({
