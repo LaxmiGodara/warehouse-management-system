@@ -1,22 +1,18 @@
-// customersController.js
-// Handles all customer operations
-// All routes are Admin only — enforced at route level
+
 
 import Customer from "../models/Customer.js";
 
-// ── Get All Customers ──────────────────────────────────────────────────────
-// Supports optional search by customer name or mobile number
 export const getAllCustomers = async (req, res, next) => {
   try {
     const filter = { isDeleted: false };
 
-    // Search by name or mobile number
+   
     if (req.query.search) {
       filter.$or = [
         { customerName: { $regex: req.query.search, $options: "i" } },
         { mobileNumber: { $regex: req.query.search, $options: "i" } },
       ];
-      // $or means match either condition
+   
     }
 
     const customers = await Customer.find(filter).sort({ createdAt: -1 });
@@ -31,9 +27,6 @@ export const getAllCustomers = async (req, res, next) => {
   }
 };
 
-// ── Get Active Customers for Dropdown ─────────────────────────────────────
-// Used by Orders module to populate customer dropdown
-// Returns only fields needed — id, name, mobile, address
 export const getActiveCustomers = async (req, res, next) => {
   try {
     const customers = await Customer.find(
@@ -50,7 +43,6 @@ export const getActiveCustomers = async (req, res, next) => {
   }
 };
 
-// ── Get Single Customer by ID ──────────────────────────────────────────────
 export const getCustomerById = async (req, res, next) => {
   try {
     const customer = await Customer.findOne({
@@ -74,12 +66,12 @@ export const getCustomerById = async (req, res, next) => {
   }
 };
 
-// ── Create Customer ────────────────────────────────────────────────────────
+
 export const createCustomer = async (req, res, next) => {
   try {
     const { customerName, mobileNumber, email, address, isActive } = req.body;
 
-    // Validate required fields
+    
     if (!customerName || !mobileNumber || !address) {
       return res.status(400).json({
         success: false,
@@ -87,7 +79,6 @@ export const createCustomer = async (req, res, next) => {
       });
     }
 
-    // Check for duplicate mobile number
     const existing = await Customer.findOne({
       mobileNumber,
       isDeleted: false,
@@ -118,7 +109,6 @@ export const createCustomer = async (req, res, next) => {
   }
 };
 
-// ── Update Customer ────────────────────────────────────────────────────────
 export const updateCustomer = async (req, res, next) => {
   try {
     const { customerName, mobileNumber, email, address, isActive } = req.body;
@@ -135,7 +125,6 @@ export const updateCustomer = async (req, res, next) => {
       });
     }
 
-    // Update only provided fields
     if (customerName) customer.customerName = customerName;
     if (mobileNumber) customer.mobileNumber = mobileNumber;
     if (email !== undefined) customer.email = email;
@@ -154,7 +143,6 @@ export const updateCustomer = async (req, res, next) => {
   }
 };
 
-// ── Soft Delete Customer ───────────────────────────────────────────────────
 export const deleteCustomer = async (req, res, next) => {
   try {
     const customer = await Customer.findOne({
