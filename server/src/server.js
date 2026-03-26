@@ -13,6 +13,7 @@ import productRoutes from "./routes/productRoutes.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import stockRoutes from "./routes/stockRoutes.js"; 
+import deliveryRoutes   from './routes/deliveryRoutes.js';  
 
 const app = express();
 
@@ -27,7 +28,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/stock", stockRoutes); // NEW
+app.use("/api/stock", stockRoutes); 
+app.use('/api/deliveries', deliveryRoutes);
 
 
 app.use(errorHandler);
