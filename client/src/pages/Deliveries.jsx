@@ -109,7 +109,7 @@ export default function Deliveries({
 
       if (!exists) {
         const newPaymentDue = {
-          id: Date.now(),
+          id: selectedOrder.id,
           orderId: selectedOrder.id,
           customerName: selectedOrder.customerName,
           orderAmount: selectedOrder.orderAmount,
@@ -124,7 +124,7 @@ export default function Deliveries({
 
     // save delivery record
     const newDelivery = {
-      id: Date.now(),
+      id: `${selectedOrderId}-${deliveries.length + 1}`,
       orderId: selectedOrderId,
       status: deliveryStatus,
       reason: deliveryStatus === "DELIVERED" ? "" : reason,

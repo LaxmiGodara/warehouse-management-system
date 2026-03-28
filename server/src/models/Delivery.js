@@ -1,7 +1,3 @@
-// Delivery.js
-// Updated:
-// 1. Added customerMobile field
-// 2. Added CANCELLED to deliveryStatus enum
 
 import mongoose from 'mongoose';
 
