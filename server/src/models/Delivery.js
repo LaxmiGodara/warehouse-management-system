@@ -1,3 +1,7 @@
+// Delivery.js
+// Updated:
+// 1. Added customerMobile field
+// 2. Added CANCELLED to deliveryStatus enum
 
 import mongoose from 'mongoose';
 
@@ -14,13 +18,11 @@ const deliverySchema = new mongoose.Schema(
       required: true
     },
 
-  
     deliveryDate: {
       type: Date,
       required: true
     },
 
-  
     customerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Customer',
@@ -32,29 +34,33 @@ const deliverySchema = new mongoose.Schema(
       required: true
     },
 
+  
+    customerMobile: {
+      type: String,
+      required: true
+     
+    },
+
     deliveryAddress: {
       type: String,
       required: true
     },
 
-
+    
     deliveryStatus: {
       type: String,
-      enum: ['PENDING', 'DELIVERED', 'NOT_DELIVERED'],
+      enum: ['PENDING', 'DELIVERED', 'NOT_DELIVERED', 'CANCELLED'],
       default: 'PENDING'
     },
-
 
     reason: {
       type: String,
       default: ''
- 
     },
 
     reasonText: {
       type: String,
       default: ''
-      
     },
 
     deliveredByUserId: {
@@ -63,7 +69,6 @@ const deliverySchema = new mongoose.Schema(
       default: null
     },
 
-  
     isDeleted: {
       type: Boolean,
       default: false
