@@ -1,16 +1,105 @@
-# React + Vite
+# Warehouse Management System (WMS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready Warehouse Management System (WMS) using the MERN stack to handle real-world inventory and order workflows.
 
-Currently, two official plugins are available:
+In real-world warehouse systems, managing inventory accurately is challenging due to issues like stock inconsistency, overselling, and lack of proper workflow between order creation, payment, and delivery. Many basic systems fail to handle real business constraints such as reserved stock and controlled stock deduction.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ WMS deals with that  by following the  real business workflows, ensures data integrity, and prevents common inventory issues like negative stock and incorrect stock updates.
 
-## React Compiler
+## Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+• Product & Stock Management with real-time quantity tracking  
+• Order Management system with customer selection and auto-filled details  
+• Reserved Quantity logic to prevent overselling  
+• Stock updates only after successful delivery (no negative stock allowed)  
+• Role-Based Access Control (Admin/Staff)  
+• Payment tracking with append-only entries and invoice generation  
 
-## Expanding the ESLint configuration
+## Technical Implementation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+• Developed REST APIs using Node.js and Express.js  
+• Designed scalable MongoDB schemas for products, orders, and customers  
+• Built responsive UI using React.js  
+• Implemented business logic aligned with real warehouse workflows
+
+## Project Structure
+warehouse-management-system/
+├── client/
+└── server/
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- MongoDB
+
+### Installation
+
+#### 1. Clone the repository
+
+git clone https://github.com/LaxmiGodara/warehouse-management-system.git
+cd warehouse-management-system
+
+
+#### 2. Install server dependencies
+cd server
+npm install
+
+
+#### 3. Install client dependencies
+
+cd ../client
+npm install
+
+
+
+## Steps to run the App
+
+### Start the backend
+
+cd server
+npm run dev
+
+
+### Start the frontend
+cd client
+npm run dev
+
+Frontend will run on:
+
+http://localhost:5173
+
+
+Backend will run on:
+
+http://localhost:<PORT>
+
+
+## Available Scripts
+
+### Client
+
+npm run dev
+npm run build
+npm run lint
+npm run preview
+
+
+### Server
+
+npm run dev
+npm start
+
+
+## Main Modules
+
+- Dashboard
+- Customers
+- Products
+- Orders
+- Deliveries
+- Stock
+- Payments
+
+
