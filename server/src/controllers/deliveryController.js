@@ -7,7 +7,7 @@ import Order from "../models/Order.js";
 import Product from "../models/Product.js";
 import Customer from "../models/Customer.js";
 import Delivery from "../models/Delivery.js";
-import PaymentDue from "../models/paymentDue.js";
+import PaymentDue from "../models/PaymentDue.js";
 
 // ── Get All Deliveries ─────────────────────────────────────────────────────
 export const getAllDeliveries = async (req, res, next) => {

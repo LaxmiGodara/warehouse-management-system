@@ -1,5 +1,5 @@
 
-import PaymentDue from '../models/paymentDue.js';
+import PaymentDue from '../models/PaymentDue.js';
 import PaymentEntry from '../models/PaymentEntry.js';
 import Order  from '../models/Order.js';
 import { generateInvoicePDF } from '../utils/invoiceService.js';
