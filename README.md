@@ -8,9 +8,9 @@ WMS deals with that by following the real business workflows, ensures data integ
 
 ## 🔗 Live Links
 
-- **Frontend (Vercel):** [warehouse-management-system-flame.vercel.app]
-- **Backend API (Render):** [warehouse-management-system-j36f.onrender.com]
-- **Health Check:** [warehouse-management-system-j36f.onrender.com/api/health]
+- **Frontend (Vercel):** https://warehouse-management-system-flame.vercel.app
+- **Backend API (Render):** https://warehouse-management-system-j36f.onrender.com
+- **Health Check:** https://warehouse-management-system-j36f.onrender.com/api/health
 
 ## Key Features
 
