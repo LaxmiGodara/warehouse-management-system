@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Laxmi Godara Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+   html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.14), transparent 26%),
+        radial-gradient(circle at top right, rgba(99, 102, 241, 0.1), transparent 20%),
+        linear-gradient(180deg, #181818 0%, #1d1d1d 48%, #222222 100%);
+      color: #f5f5f5;
+    }
+    .display-font {
+      font-family: "Poppins", sans-serif;
+      letter-spacing: -0.03em;
+    }
+    .glass-panel {
+      background: linear-gradient(180deg, rgba(38, 38, 38, 0.97), rgba(30, 30, 30, 0.97));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+    }
+    .accent-line {
+      background: linear-gradient(90deg, rgba(59, 130, 246, 0.8), rgba(129, 140, 248, 0.75));
+    }
+    .noise {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 78%);
+    }
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(36px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.2s ease;
+    }
+    .reveal.visible {
+      animation: fadeSlideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--delay, 0s);
+    }
+    .project-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 15, 15, 0.02), rgba(15, 15, 15, 0.38));
+    }
+    .section-label {
+      font-family: "Poppins", sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+    }
+   </style>
+ </head>
+ <body class="text-zinc-100">
+  <header class="sticky top-0 z-50 border-b border-white/10 bg-[#181818]/88 backdrop-blur-xl">
+   <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+    <a class="display-font text-lg font-bold tracking-tight text-white" href="#home">Laxmi Godara</a>
+    <ul class="hidden items-center gap-6 text-sm font-medium text-zinc-300 md:flex">
+     <li><a class="transition hover:text-white" href="#home">Home</a></li>
+     <li><a class="transition hover:text-white" href="#about">About</a></li>
+     <li><a class="transition hover:text-white" href="#projects">Projects</a></li>
+     <li><a class="transition hover:text-white" href="#skills">Skills</a></li>
+     <li><a class="transition hover:text-white" href="#contact">Contact</a></li>
+    </ul>
+    <a class="rounded-full border border-blue-400/40 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-200 transition hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-500/20 hover:text-white" href="Laxmi_Godara_Resume.pdf" rel="noopener noreferrer" target="_blank">
+     Resume
+    </a>
+   </nav>
+  </header>
+
+  <main>
+   <section class="relative overflow-hidden px-5 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-20" id="home">
+    <div class="noise"></div>
+    <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+     <div class="relative z-10 reveal" style="--delay: 0.05s;">
+      <p class="section-label mb-5">Home</p>
+      <p class="mb-5 text-lg font-semibold tracking-[0.08em] text-zinc-200 sm:text-xl">
+       Laxmi Godara
+      </p>
+      <h1 class="display-font max-w-4xl text-4xl font-extrabold leading-[1.02] text-white sm:text-5xl lg:text-6xl">
+       Full Stack Developer
+      </h1>
+      <p class="mt-6 max-w-2xl text-base font-normal leading-8 text-zinc-300 sm:text-lg">
+       MERN stack developer with a disciplined, ownership-driven approach to web development. I focus on responsive interfaces, secure backend logic, and systems that solve practical inventory, billing, and workflow problems.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3 text-sm font-medium text-zinc-300">
+       <span class="rounded-full border border-white/10 bg-[#1a1a1a] px-4 py-2">React &amp; Next.js</span>
+       <span class="rounded-full border border-white/10 bg-[#1a1a1a] px-4 py-2">Node.js &amp; Express</span>
+       <span class="rounded-full border border-white/10 bg-[#1a1a1a] px-4 py-2">MongoDB</span>
+       <span class="rounded-full border border-white/10 bg-[#1a1a1a] px-4 py-2">Tailwind CSS</span>
+      </div>
+      <div class="mt-10 flex flex-wrap gap-4">
+       <a class="rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-zinc-200" href="Laxmi_Godara_Resume.pdf" rel="noopener noreferrer" target="_blank">
+        Open Resume
+       </a>
+       <a class="rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" href="#projects">
+        View Projects
+       </a>
+      </div>
+     </div>
+     <div class="relative reveal" style="--delay: 0.16s;">
+      <div class="absolute -left-8 top-8 h-28 w-28 rounded-full bg-blue-500/20 blur-3xl"></div>
+      <div class="absolute -bottom-6 right-4 h-32 w-32 rounded-full bg-indigo-500/20 blur-3xl"></div>
+      <div class="glass-panel overflow-hidden rounded-[2rem] p-4">
+       <div class="project-media relative overflow-hidden rounded-[1.4rem]">
+        <img alt="Developer workspace with code on screen" class="h-[390px] w-full object-cover sm:h-[410px]" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=80"/>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <section class="px-5 py-20 sm:px-8 sm:py-28" id="about">
+    <div class="mx-auto max-w-7xl">
+     <div class="reveal" style="--delay: 0.04s;">
+      <p class="section-label mb-4">About</p>
+      <div class="accent-line mb-8 h-1 w-20 rounded-full"></div>
+     </div>
+     <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="glass-panel rounded-[1.8rem] p-8 reveal" style="--delay: 0.08s;">
+       <p class="mt-6 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg">
+        I come from a disciplined background and bring that same mindset into development. After clearing UPSC CDS and appearing in the Army SSB interview process, I intentionally transitioned into tech and started building products around real workflows like warehouse management, POS billing, and automation.
+       </p>
+       <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        <div class="rounded-[1.2rem] border border-white/10 bg-[#1c1c1c] p-5">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">Work Style</p>
+         <p class="mt-3 text-zinc-200">Clean UI, solid backend logic, practical delivery.</p>
+        </div>
+        <div class="rounded-[1.2rem] border border-white/10 bg-[#1c1c1c] p-5">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">Strengths</p>
+         <p class="mt-3 text-zinc-200">Problem solving, adaptability, real-world coordination.</p>
+        </div>
+       </div>
+      </div>
+      <div class="grid gap-6">
+       <div class="glass-panel overflow-hidden rounded-[1.8rem] reveal" style="--delay: 0.14s;">
+        <img alt="Software dashboard and analytics interface" class="h-[290px] w-full object-cover sm:h-[320px]" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1400&q=80"/>
+       </div>
+       <div class="glass-panel rounded-[1.8rem] p-8 reveal" style="--delay: 0.2s;">
+        <p class="text-base font-bold uppercase tracking-[0.18em] text-zinc-200">Achievements</p>
+        <ul class="mt-5 space-y-4 text-zinc-200">
+         <li>Cleared UPSC CDS exam</li>
+         <li>Appeared in Army SSB interview</li>
+         <li>Organized a public book event</li>
+         <li>Regular participant in online coding challenges</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <section class="px-5 py-20 sm:px-8 sm:py-28" id="projects">
+    <div class="mx-auto max-w-7xl">
+     <div class="reveal" style="--delay: 0.04s;">
+      <div class="accent-line mb-8 h-1 w-20 rounded-full"></div>
+      <h2 class="display-font section-label max-w-3xl leading-tight text-white">
+       Projects
+      </h2>
+     </div>
+
+     <article class="mt-12 grid items-center gap-8 rounded-[2rem] border border-white/8 bg-[#181818] p-5 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] reveal" style="--delay: 0.08s;">
+      <div class="project-media relative overflow-hidden rounded-[1.5rem]">
+       <img alt="Warehouse management dashboard and logistics interface" class="h-[270px] w-full object-cover sm:h-[310px]" src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1400&q=80"/>
+      </div>
+      <div>
+       <p class="text-base font-bold uppercase tracking-[0.18em] text-zinc-200">Project 01</p>
+       <h3 class="display-font mt-4 text-3xl font-bold text-white sm:text-4xl">Warehouse Management System</h3>
+       <p class="mt-5 text-base leading-8 text-zinc-300 sm:text-lg">
+        A production-ready system for inventory and order workflows, designed to solve stock inconsistency, overselling, order tracking, delivery flow, invoice generation, and day-to-day warehouse operations.
+       </p>
+       <div class="mt-6 flex flex-wrap gap-3 text-sm text-zinc-300">
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">React</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">Node.js</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">Express</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">MongoDB</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">Tailwind CSS</span>
+       </div>
+       <div class="mt-8 flex flex-wrap gap-4">
+        <a class="rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-zinc-200" href="https://warehouse-management-system-flame.vercel.app" rel="noopener noreferrer" target="_blank">
+         Live Demo
+        </a>
+        <a class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" href="https://github.com/LaxmiGodara/warehouse-management-system" rel="noopener noreferrer" target="_blank">
+         GitHub
+        </a>
+       </div>
+      </div>
+     </article>
+
+     <article class="mt-10 grid items-center gap-8 rounded-[2rem] border border-white/8 bg-[#181818] p-5 sm:p-8 lg:grid-cols-[0.95fr_1.05fr] reveal" style="--delay: 0.14s;">
+      <div class="order-2 lg:order-1">
+       <p class="text-base font-bold uppercase tracking-[0.18em] text-zinc-200">Project 02</p>
+       <h3 class="display-font mt-4 text-3xl font-bold text-white sm:text-4xl">Prepaid Wallet POS System</h3>
+       <p class="mt-5 text-base leading-8 text-zinc-300 sm:text-lg">
+        A billing-focused product built for controlled POS environments, with strict wallet validation, atomic transactions, secure APIs, and complete traceability for card, wallet, and payment activity.
+       </p>
+       <div class="mt-6 flex flex-wrap gap-3 text-sm text-zinc-300">
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">React</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">Node.js</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">MongoDB</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">JWT</span>
+        <span class="rounded-full border border-white/10 bg-[#1b1b1b] px-4 py-2">REST APIs</span>
+       </div>
+       <div class="mt-8 flex flex-wrap gap-4">
+        <span class="rounded-full border border-indigo-400/30 bg-indigo-500/10 px-5 py-3 text-sm font-semibold text-indigo-200">
+         Live Demo on Request
+        </span>
+        <a class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" href="https://github.com/LaxmiGodara/smart-file-autotransfer" rel="noopener noreferrer" target="_blank">
+         GitHub
+        </a>
+       </div>
+      </div>
+      <div class="project-media relative order-1 overflow-hidden rounded-[1.5rem] lg:order-2">
+       <img alt="System architecture and payment workflow visual" class="h-[270px] w-full object-cover sm:h-[310px]" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1400&q=80"/>
+      </div>
+     </article>
+    </div>
+   </section>
+
+   <section class="px-5 py-20 sm:px-8 sm:py-28" id="skills">
+    <div class="mx-auto max-w-7xl">
+     <div class="reveal" style="--delay: 0.04s;">
+      <p class="section-label mb-4">Skills</p>
+      <div class="accent-line mb-8 h-1 w-20 rounded-full"></div>
+     </div>
+     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <div class="glass-panel rounded-[1.6rem] p-7 reveal" style="--delay: 0.06s;">
+       <h3 class="mt-4 text-2xl font-bold text-white">Frontend</h3>
+       <p class="mt-4 leading-8 text-zinc-400">React, Next.js, JavaScript, TypeScript, Tailwind CSS, responsive UI design.</p>
+      </div>
+      <div class="glass-panel rounded-[1.6rem] p-7 reveal" style="--delay: 0.1s;">
+       <h3 class="mt-4 text-2xl font-bold text-white">Backend</h3>
+       <p class="mt-4 leading-8 text-zinc-400">Node.js, Express.js, REST API design, JWT authentication, RBAC, secure app flows.</p>
+      </div>
+      <div class="glass-panel rounded-[1.6rem] p-7 reveal" style="--delay: 0.14s;">
+       <h3 class="mt-4 text-2xl font-bold text-white">Database</h3>
+       <p class="mt-4 leading-8 text-zinc-400">MongoDB, schema design, data modeling, query handling, transactional workflows.</p>
+      </div>
+      <div class="glass-panel rounded-[1.6rem] p-7 reveal" style="--delay: 0.18s;">
+       <h3 class="mt-4 text-2xl font-bold text-white">Tools</h3>
+       <p class="mt-4 leading-8 text-zinc-400">GitHub, Postman, VS Code, Netlify, Vercel, Render, Agile collaboration workflows.</p>
+      </div>
+     </div>
+    </div>
+   </section>
+
+   <section class="px-5 py-20 sm:px-8 sm:py-28" id="contact">
+    <div class="mx-auto max-w-7xl">
+     <div class="grid gap-6 lg:grid-cols-[1fr_1.05fr]">
+      <div class="glass-panel rounded-[1.9rem] p-8 reveal" style="--delay: 0.06s;">
+       <p class="section-label">Contact</p>
+       <h2 class="display-font mt-5 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+        Let’s connect
+       </h2>
+       <p class="mt-5 max-w-xl text-base leading-8 text-zinc-300 sm:text-lg">
+        I’m open to opportunities, collaborations, and frontend or full-stack roles where I can contribute with strong execution and practical product thinking.
+      </p>
+       <div class="mt-8 flex flex-wrap gap-4">
+        <a class="rounded-full bg-white px-5 py-3 text-sm font-semibold text-black transition hover:-translate-y-0.5 hover:bg-zinc-200" href="mailto:lgodara285@gmail.com">
+         Email Me
+        </a>
+        <a class="rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" href="Laxmi_Godara_Resume.pdf" rel="noopener noreferrer" target="_blank">
+         Open Resume
+        </a>
+       </div>
+      </div>
+      <div class="glass-panel overflow-hidden rounded-[1.9rem] reveal" style="--delay: 0.12s;">
+       <div class="project-media relative h-56 overflow-hidden">
+        <img alt="Developer workstation with engineering setup" class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80"/>
+       </div>
+       <div class="grid gap-5 p-8 sm:grid-cols-2">
+        <a class="rounded-[1.3rem] border border-white/10 bg-[#171717] p-5 text-zinc-200 transition hover:border-blue-400/30 hover:bg-[#1b1b1b]" href="mailto:lgodara285@gmail.com">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">Email</p>
+         <p class="mt-3 text-base font-semibold">lgodara285@gmail.com</p>
+        </a>
+        <div class="rounded-[1.3rem] border border-white/10 bg-[#171717] p-5 text-zinc-200">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">Phone</p>
+         <p class="mt-3 text-base font-semibold">7976533737</p>
+        </div>
+        <a class="rounded-[1.3rem] border border-white/10 bg-[#171717] p-5 text-zinc-200 transition hover:border-blue-400/30 hover:bg-[#1b1b1b]" href="https://www.linkedin.com/in/laxmi-godara-b1b0b6241" rel="noopener noreferrer" target="_blank">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">LinkedIn</p>
+         <p class="mt-3 text-base font-semibold">Connect professionally</p>
+        </a>
+        <a class="rounded-[1.3rem] border border-white/10 bg-[#171717] p-5 text-zinc-200 transition hover:border-blue-400/30 hover:bg-[#1b1b1b]" href="https://github.com/LaxmiGodara" rel="noopener noreferrer" target="_blank">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">GitHub</p>
+         <p class="mt-3 text-base font-semibold">See code and repositories</p>
+        </a>
+        <a class="rounded-[1.3rem] border border-white/10 bg-[#171717] p-5 text-zinc-200 transition hover:border-blue-400/30 hover:bg-[#1b1b1b]" href="https://x.com/LaxmiCodes" rel="noopener noreferrer" target="_blank">
+         <p class="text-xs uppercase tracking-[0.22em] text-zinc-500">Twitter</p>
+         <p class="mt-3 text-base font-semibold">Follow updates</p>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main>
+
+  <script>
+   const observer = new IntersectionObserver((entries) => {
+     entries.forEach((entry) => {
+       if (entry.isIntersecting) {
+         entry.target.classList.add("visible");
+         observer.unobserve(entry.target);
+       }
+     });
+   }, { threshold: 0.14 });
+
+   document.querySelectorAll(".reveal").forEach((element) => {
+     observer.observe(element);
+   });
+  </script>
+ </body>
+</html>
