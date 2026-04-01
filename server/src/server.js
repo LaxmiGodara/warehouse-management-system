@@ -15,6 +15,7 @@ import orderRoutes      from './routes/orderRoutes.js';
 import stockRoutes      from './routes/stockRoutes.js';
 import deliveryRoutes   from './routes/deliveryRoutes.js';
 import paymentRoutes    from './routes/paymentRoutes.js';   
+import ensureAdminUser  from './utils/bootstrapAdmin.js';
 
 const app = express();
 
@@ -39,8 +40,16 @@ app.use('/api/payments',   paymentRoutes);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
-connectDB();
+const startServer = async () => {
+  await connectDB();
+  await ensureAdminUser();
 
-app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
+  app.listen(PORT, () => {
+    console.log(` Server running on port ${PORT}`);
+  });
+};
+
+startServer().catch((error) => {
+  console.error("Server startup failed:", error);
+  process.exit(1);
 });
