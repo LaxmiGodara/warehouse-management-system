@@ -17,6 +17,12 @@ export default function StockPage({
   const [updateError, setUpdateError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const resetEditState = () => {
+    setEditingId("");
+    setEditedQty("");
+    setIsUpdating(false);
+  };
+
   useEffect(() => {
     const loadAuditLogs = async () => {
       try {
@@ -46,6 +52,12 @@ export default function StockPage({
     setSuccessMessage("");
   };
 
+  const handleCancelEdit = () => {
+    setUpdateError("");
+    setSuccessMessage("");
+    resetEditState();
+  };
+
   const handleUpdate = async () => {
     const numericQty = Number(editedQty);
 
@@ -63,21 +75,26 @@ export default function StockPage({
         totalQty: numericQty,
       });
 
-      const [, auditResponse] = await Promise.all([
-        refreshStockItems(),
-        api.get("/stock/audit"),
-        refreshProducts(),
-      ]);
-      setAuditLogs(auditResponse.data.logs || []);
-      setEditingId("");
-      setEditedQty("");
       setSuccessMessage("Stock updated successfully.");
+      resetEditState();
+
+      try {
+        const [, auditResponse] = await Promise.all([
+          refreshStockItems(),
+          api.get("/stock/audit"),
+          refreshProducts(),
+        ]);
+        setAuditLogs(auditResponse.data.logs || []);
+      } catch {
+        setUpdateError(
+          "Stock was updated, but the latest stock view could not be refreshed automatically.",
+        );
+      }
     } catch (error) {
       setUpdateError(
         error.response?.data?.message ||
           "Unable to update stock right now. Please try again.",
       );
-    } finally {
       setIsUpdating(false);
     }
   };
@@ -168,10 +185,8 @@ export default function StockPage({
                           <button
                             type="button"
                             className="ghost-button danger-button"
-                            onClick={() => {
-                              setEditingId("");
-                              setEditedQty("");
-                            }}
+                            onClick={handleCancelEdit}
+                            disabled={isUpdating}
                           >
                             Cancel
                           </button>

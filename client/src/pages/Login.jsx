@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export default function Login({ onLogin, isSubmitting, error }) {
   const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
+    username: "admin",
+    password: "admin123",
   });
 
   const handleSubmit = (event) => {
@@ -16,8 +16,10 @@ export default function Login({ onLogin, isSubmitting, error }) {
       <div className="auth-panel">
         <form className="auth-card" onSubmit={handleSubmit}>
           <div className="section-heading">
-           
             <h2>Login to the dashboard</h2>
+            <p className="muted-copy">
+              Login is autofilled for quick demo purpose.
+            </p>
           </div>
 
           <label className="form-field">

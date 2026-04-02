@@ -6,7 +6,10 @@ import {
   formatStatusLabel,
 } from "../utils/formatters";
 
+let lineItemSequence = 0;
+
 const createLineItem = () => ({
+  id: `line-item-${lineItemSequence += 1}`,
   productId: "",
   quantity: 1,
   rate: "",
@@ -72,10 +75,14 @@ export default function OrdersPage({
     setDeliveryAddress(customer?.address || "");
   };
 
-  const updateItem = (index, field, value) => {
+  const handleAddItem = () => {
+    setItems((current) => [...current, createLineItem()]);
+  };
+
+  const updateItem = (itemId, field, value) => {
     setItems((current) =>
-      current.map((item, itemIndex) => {
-        if (itemIndex !== index) {
+      current.map((item) => {
+        if (item.id !== itemId) {
           return item;
         }
 
@@ -94,6 +101,10 @@ export default function OrdersPage({
         };
       }),
     );
+  };
+
+  const removeItem = (itemId) => {
+    setItems((current) => current.filter((item) => item.id !== itemId));
   };
 
   const handleCreateOrder = async (event) => {
@@ -212,26 +223,26 @@ export default function OrdersPage({
               <button
                 type="button"
                 className="ghost-button"
-                onClick={() => setItems((current) => [...current, createLineItem()])}
+                onClick={handleAddItem}
               >
                 Add item
               </button>
             </div>
 
-            {items.map((item, index) => {
+            {items.map((item) => {
               const selectedProduct = activeProducts.find(
                 (product) => product._id === item.productId,
               );
               const stock = item.productId ? stockLookup[item.productId] : null;
 
               return (
-                <div key={`${item.productId}-${index}`} className="line-item-card">
+                <div key={item.id} className="line-item-card">
                   <label className="form-field">
                     <span>Product</span>
                     <select
                       value={item.productId}
                       onChange={(event) =>
-                        updateItem(index, "productId", event.target.value)
+                        updateItem(item.id, "productId", event.target.value)
                       }
                     >
                       <option value="">Select product</option>
@@ -251,7 +262,7 @@ export default function OrdersPage({
                         min="1"
                         value={item.quantity}
                         onChange={(event) =>
-                          updateItem(index, "quantity", event.target.value)
+                          updateItem(item.id, "quantity", event.target.value)
                         }
                       />
                     </label>
@@ -264,7 +275,7 @@ export default function OrdersPage({
                         step="0.01"
                         value={item.rate}
                         onChange={(event) =>
-                          updateItem(index, "rate", event.target.value)
+                          updateItem(item.id, "rate", event.target.value)
                         }
                       />
                     </label>
@@ -286,9 +297,7 @@ export default function OrdersPage({
                     <button
                       type="button"
                       className="ghost-button danger-button"
-                      onClick={() =>
-                        setItems((current) => current.filter((_, itemIndex) => itemIndex !== index))
-                      }
+                      onClick={() => removeItem(item.id)}
                     >
                       Remove item
                     </button>

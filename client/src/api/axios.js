@@ -2,6 +2,30 @@ import axios from "axios";
 
 const AUTH_STORAGE_KEY = "wms-auth";
 
+const normalizeApiBaseUrl = (rawValue) => {
+  if (!rawValue) {
+    return null;
+  }
+
+  const cleanedValue = String(rawValue).trim().replace(/[;,\s]+$/, "");
+
+  if (!cleanedValue) {
+    return null;
+  }
+
+  if (cleanedValue.endsWith("/api")) {
+    return cleanedValue;
+  }
+
+  return `${cleanedValue.replace(/\/+$/, "")}/api`;
+};
+
+const configuredApiBaseUrl = normalizeApiBaseUrl(import.meta.env.VITE_API_URL);
+const resolvedBaseUrl =
+  import.meta.env.DEV
+    ? "/api"
+    : configuredApiBaseUrl || "/api";
+
 export const getStoredAuth = () => {
   try {
     const storedValue = localStorage.getItem(AUTH_STORAGE_KEY);
@@ -20,9 +44,7 @@ export const clearStoredAuth = () => {
 };
 
 const api = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_URL ||
-    (import.meta.env.DEV ? "http://localhost:5000/api" : "/api"),
+  baseURL: resolvedBaseUrl,
 });
 
 api.interceptors.request.use((config) => {
