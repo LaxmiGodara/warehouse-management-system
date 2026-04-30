@@ -17,7 +17,6 @@ import stockRoutes      from './routes/stockRoutes.js';
 import deliveryRoutes   from './routes/deliveryRoutes.js';
 import paymentRoutes    from './routes/paymentRoutes.js';   
 import ensureAdminUser  from './utils/bootstrapAdmin.js';
-import ensureLocalMongo from './utils/ensureLocalMongo.js';
 
 const app = express();
 
@@ -92,8 +91,6 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 const initializeServices = async () => {
-  await ensureLocalMongo(process.env.MONGO_URI);
-
   const isDatabaseConnected = await connectDB();
   if (!isDatabaseConnected) {
     console.warn('Server is running without a database connection.');
