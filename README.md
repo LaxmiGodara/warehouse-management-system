@@ -8,8 +8,8 @@ WMS deals with that by following the real business workflows, ensures data integ
 
 ## 🔗 Live Links
 
-- **App Demo URL:** https://warehouse-management-system-flame.vercel.app
-- **App Demo Video:** https://www.loom.com/share/95578f8d2c6f4e73b308f9f0f1a5e064
+-  🔗 **Video Walkthrough**: https://www.loom.com/share/95578f8d2c6f4e73b308f9f0f1a5e064
+- 🔗  **Live App**: https://warehouse-management-system-flame.vercel.app
 
 
 ## Key Features
