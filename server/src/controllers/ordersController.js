@@ -1,50 +1,41 @@
-
-import mongoose from 'mongoose';
-import Order from '../models/Order.js';
-import Product from '../models/Product.js';
-import Customer from '../models/Customer.js';
-import { getReservedQty } from '../utils/reservationService.js';
-
-
+import mongoose from "mongoose";
+import Order from "../models/Order.js";
+import Product from "../models/Product.js";
+import Customer from "../models/Customer.js";
+import { getReservedQty } from "../utils/reservationService.js";
 
 const generateOrderNo = async () => {
-
   const now = new Date();
 
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
   const datePart = `${year}${month}${day}`;
 
-
   const count = await Order.countDocuments({
-    orderNo: { $regex: `^SO-${datePart}-` }
+    orderNo: { $regex: `^SO-${datePart}-` },
   });
 
-  const sequence = String(count + 1).padStart(3, '0');
+  const sequence = String(count + 1).padStart(3, "0");
 
   return `SO-${datePart}-${sequence}`;
 };
 
-
 const calculateAmounts = (items) => {
-  return items.map(item => ({
+  return items.map((item) => ({
     ...item,
-    lineAmount: item.quantity * item.rate
+    lineAmount: item.quantity * item.rate,
   }));
 };
-
-
+export { calculateAmounts };
 
 export const getAllOrders = async (req, res, next) => {
   try {
-
     const filter = { isDeleted: false };
 
     if (req.query.search) {
-      filter.orderNo = { $regex: req.query.search, $options: 'i' };
+      filter.orderNo = { $regex: req.query.search, $options: "i" };
     }
-
 
     if (req.query.deliveryDate) {
       const date = new Date(req.query.deliveryDate);
@@ -55,159 +46,143 @@ export const getAllOrders = async (req, res, next) => {
     }
 
     const orders = await Order.find(filter)
-      .populate('customerId', 'customerName mobileNumber')
+      .populate("customerId", "customerName mobileNumber")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
       count: orders.length,
-      orders
+      orders,
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-
-
 export const getPendingDeliveries = async (req, res, next) => {
   try {
-
     const orders = await Order.find({
       isActive: true,
       isDeleted: false,
-      isDelivered: false
+      isDelivered: false,
     })
-      .populate('customerId', 'customerName mobileNumber address')
+      .populate("customerId", "customerName mobileNumber address")
       .sort({ deliveryDate: 1 });
-   
 
     res.status(200).json({
       success: true,
       count: orders.length,
-      orders
+      orders,
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-
 export const getOrderById = async (req, res, next) => {
   try {
-
     const order = await Order.findOne({
       _id: req.params.id,
-      isDeleted: false
-    }).populate('customerId', 'customerName mobileNumber address');
+      isDeleted: false,
+    }).populate("customerId", "customerName mobileNumber address");
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: 'Order not found'
+        message: "Order not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      order
+      order,
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-
 export const createOrder = async (req, res, next) => {
   try {
-
     const {
       customerId,
       deliveryAddress,
       deliveryDate,
       remarks,
       items,
-      isActive
+      isActive,
     } = req.body;
-
 
     if (!customerId || !deliveryAddress || !deliveryDate) {
       return res.status(400).json({
         success: false,
-        message: 'Customer, delivery address and delivery date are required'
+        message: "Customer, delivery address and delivery date are required",
       });
     }
 
     if (!items || items.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'At least one item is required'
+        message: "At least one item is required",
       });
     }
 
     const customer = await Customer.findOne({
       _id: customerId,
       isActive: true,
-      isDeleted: false
+      isDeleted: false,
     });
 
     if (!customer) {
       return res.status(404).json({
         success: false,
-        message: 'Customer not found or inactive'
+        message: "Customer not found or inactive",
       });
     }
-
-  
 
     const validatedItems = [];
 
     for (const item of items) {
-
-
       if (!item.productId || !item.quantity || item.rate === undefined) {
         return res.status(400).json({
           success: false,
-          message: 'Each item must have productId, quantity and rate'
+          message: "Each item must have productId, quantity and rate",
         });
       }
 
       if (item.quantity <= 0) {
         return res.status(400).json({
           success: false,
-          message: 'Item quantity must be greater than 0'
+          message: "Item quantity must be greater than 0",
         });
       }
 
       if (item.rate < 0) {
         return res.status(400).json({
           success: false,
-          message: 'Item rate cannot be negative'
+          message: "Item rate cannot be negative",
         });
       }
 
       const product = await Product.findOne({
         _id: item.productId,
         isActive: true,
-        isDeleted: false
+        isDeleted: false,
       });
 
       if (!product) {
         return res.status(404).json({
           success: false,
-          message: `Product not found or inactive`
+          message: `Product not found or inactive`,
         });
       }
 
       validatedItems.push({
         productId: item.productId,
-        productName: product.productName, 
+        productName: product.productName,
         quantity: item.quantity,
         rate: item.rate,
-        lineAmount: item.quantity * item.rate  
+        lineAmount: item.quantity * item.rate,
       });
     }
 
@@ -217,23 +192,18 @@ export const createOrder = async (req, res, next) => {
       const availableQty = product.totalQty - reservedQty;
 
       if (item.quantity > availableQty) {
-      
         console.warn(
-          `Warning: ${product.productName} - ordered ${item.quantity}, available ${availableQty}`
+          `Warning: ${product.productName} - ordered ${item.quantity}, available ${availableQty}`,
         );
       }
     }
 
-    
-
     const orderAmount = validatedItems.reduce(
-      (total, item) => total + item.lineAmount, 0
+      (total, item) => total + item.lineAmount,
+      0,
     );
 
-
     const orderNo = await generateOrderNo();
-
- 
 
     const order = await Order.create({
       orderNo,
@@ -241,58 +211,46 @@ export const createOrder = async (req, res, next) => {
       customerName: customer.customerName,
       deliveryAddress,
       deliveryDate,
-      remarks: remarks || '',
+      remarks: remarks || "",
       items: validatedItems,
       orderAmount,
       isActive: isActive !== undefined ? isActive : true,
-      isDelivered: false
+      isDelivered: false,
     });
-
 
     res.status(201).json({
       success: true,
-      message: 'Order created successfully',
-      order
+      message: "Order created successfully",
+      order,
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-
-
 export const updateOrder = async (req, res, next) => {
   try {
-
-    const {
-      deliveryAddress,
-      deliveryDate,
-      remarks,
-      items,
-      isActive
-    } = req.body;
+    const { deliveryAddress, deliveryDate, remarks, items, isActive } =
+      req.body;
 
     const order = await Order.findOne({
       _id: req.params.id,
-      isDeleted: false
+      isDeleted: false,
     });
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: 'Order not found'
+        message: "Order not found",
       });
     }
-
 
     if (order.isDelivered) {
       return res.status(400).json({
         success: false,
-        message: 'Cannot edit a delivered order'
+        message: "Cannot edit a delivered order",
       });
     }
-
 
     if (deliveryAddress) order.deliveryAddress = deliveryAddress;
     if (deliveryDate) order.deliveryDate = deliveryDate;
@@ -300,28 +258,26 @@ export const updateOrder = async (req, res, next) => {
     if (isActive !== undefined) order.isActive = isActive;
 
     if (items && items.length > 0) {
-
       const validatedItems = [];
 
       for (const item of items) {
-
         if (!item.productId || !item.quantity || item.rate === undefined) {
           return res.status(400).json({
             success: false,
-            message: 'Each item must have productId, quantity and rate'
+            message: "Each item must have productId, quantity and rate",
           });
         }
 
         const product = await Product.findOne({
           _id: item.productId,
           isActive: true,
-          isDeleted: false
+          isDeleted: false,
         });
 
         if (!product) {
           return res.status(404).json({
             success: false,
-            message: 'Product not found or inactive'
+            message: "Product not found or inactive",
           });
         }
 
@@ -330,14 +286,15 @@ export const updateOrder = async (req, res, next) => {
           productName: product.productName,
           quantity: item.quantity,
           rate: item.rate,
-          lineAmount: item.quantity * item.rate
+          lineAmount: item.quantity * item.rate,
         });
       }
 
       order.items = validatedItems;
 
       order.orderAmount = validatedItems.reduce(
-        (total, item) => total + item.lineAmount, 0
+        (total, item) => total + item.lineAmount,
+        0,
       );
     }
 
@@ -345,10 +302,9 @@ export const updateOrder = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Order updated successfully',
-      order
+      message: "Order updated successfully",
+      order,
     });
-
   } catch (error) {
     next(error);
   }
@@ -356,46 +312,40 @@ export const updateOrder = async (req, res, next) => {
 
 export const deleteOrder = async (req, res, next) => {
   try {
-
     const order = await Order.findOne({
       _id: req.params.id,
-      isDeleted: false
+      isDeleted: false,
     });
 
     if (!order) {
       return res.status(404).json({
         success: false,
-        message: 'Order not found'
+        message: "Order not found",
       });
     }
 
- 
     if (order.isDelivered) {
       return res.status(400).json({
         success: false,
-        message: 'Cannot delete a delivered order'
+        message: "Cannot delete a delivered order",
       });
     }
 
-  
     order.isDeleted = true;
     order.isActive = false;
     await order.save();
 
     res.status(200).json({
       success: true,
-      message: 'Order deleted successfully'
+      message: "Order deleted successfully",
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-
 export const getStockSummaryForOrder = async (req, res, next) => {
   try {
-
     const products = await Product.find({ isActive: true, isDeleted: false });
 
     const stockSummary = await Promise.all(
@@ -409,16 +359,15 @@ export const getStockSummaryForOrder = async (req, res, next) => {
           unit: product.unit,
           totalQty: product.totalQty,
           reservedQty,
-          availableQty
+          availableQty,
         };
-      })
+      }),
     );
 
     res.status(200).json({
       success: true,
-      stockSummary
+      stockSummary,
     });
-
   } catch (error) {
     next(error);
   }
