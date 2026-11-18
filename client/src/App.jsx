@@ -54,6 +54,7 @@ function App() {
     const response = await api.get(
       isAdmin ? "/orders" : "/orders/pending-deliveries",
     );
+    setOrders(response.data.orders || []);
   };
 
   const loadDeliveries = async () => {

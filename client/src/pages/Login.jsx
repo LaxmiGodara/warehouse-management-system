@@ -18,7 +18,7 @@ export default function Login({ onLogin, isSubmitting, error }) {
           <div className="section-heading">
             <h2>Login to the dashboard</h2>
             <p className="muted-copy">
-              Login is autofilled for quick demo purpose.
+              Demo login details are in the project README.
             </p>
           </div>
 
