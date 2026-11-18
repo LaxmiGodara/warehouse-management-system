@@ -192,9 +192,10 @@ export const createOrder = async (req, res, next) => {
       const availableQty = product.totalQty - reservedQty;
 
       if (item.quantity > availableQty) {
-        console.warn(
-          `Warning: ${product.productName} - ordered ${item.quantity}, available ${availableQty}`,
-        );
+        return res.status(400).json({
+          success: false,
+          message: `Not enough stock for ${product.productName}. Ordered ${item.quantity}, available ${availableQty}`,
+        });
       }
     }
 
