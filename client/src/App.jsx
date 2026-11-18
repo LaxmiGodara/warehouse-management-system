@@ -12,7 +12,9 @@ import api, {
 function App() {
   const [auth, setAuth] = useState(() => getStoredAuth());
   const [authError, setAuthError] = useState("");
-  const [isAuthChecking, setIsAuthChecking] = useState(Boolean(getStoredAuth()));
+  const [isAuthChecking, setIsAuthChecking] = useState(
+    Boolean(getStoredAuth()),
+  );
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [isAppLoading, setIsAppLoading] = useState(false);
   const [appError, setAppError] = useState("");
@@ -48,8 +50,10 @@ function App() {
   };
 
   const loadOrders = async () => {
-    const response = await api.get("/orders");
-    setOrders(response.data.orders || []);
+    const isAdmin = auth?.user?.role === "ADMIN";
+    const response = await api.get(
+      isAdmin ? "/orders" : "/orders/pending-deliveries",
+    );
   };
 
   const loadDeliveries = async () => {
@@ -113,14 +117,20 @@ function App() {
       setAppError("");
 
       try {
-        await Promise.all([
-          loadCustomers(),
-          loadProducts(),
-          loadOrders(),
-          loadDeliveries(),
-          loadPaymentDues(),
-          loadStockItems(),
-        ]);
+        const isAdmin = auth?.user?.role === "ADMIN";
+
+        await Promise.all(
+          isAdmin
+            ? [
+                loadCustomers(),
+                loadProducts(),
+                loadOrders(),
+                loadDeliveries(),
+                loadPaymentDues(),
+                loadStockItems(),
+              ]
+            : [loadOrders(), loadDeliveries(), loadPaymentDues()],
+        );
       } catch (error) {
         setAppError(
           error.response?.data?.message ||
@@ -185,7 +195,11 @@ function App() {
 
   if (!auth?.token) {
     return (
-      <Login onLogin={handleLogin} isSubmitting={isLoggingIn} error={authError} />
+      <Login
+        onLogin={handleLogin}
+        isSubmitting={isLoggingIn}
+        error={authError}
+      />
     );
   }
 

@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export default function Login({ onLogin, isSubmitting, error }) {
   const [credentials, setCredentials] = useState({
-    username: "admin",
-    password: "admin123",
+    username: "",
+    password: "",
   });
 
   const handleSubmit = (event) => {
@@ -54,7 +54,11 @@ export default function Login({ onLogin, isSubmitting, error }) {
 
           {error ? <p className="form-error">{error}</p> : null}
 
-          <button type="submit" className="primary-button" disabled={isSubmitting}>
+          <button
+            type="submit"
+            className="primary-button"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Signing in..." : "Sign in"}
           </button>
         </form>
